@@ -1,0 +1,107 @@
+@php
+    use App\Http\Middleware\SetLocale;
+
+    $navLinks = [
+        ['route' => 'home', 'label' => __('Accueil')],
+        ['route' => 'services.index', 'label' => __('Services')],
+        ['route' => 'news.index', 'label' => __('Actualités')],
+        ['route' => 'faq', 'label' => __('FAQ')],
+        ['route' => 'contact', 'label' => __('Contact')],
+    ];
+    $localePrefix = app()->getLocale() === 'en' ? 'en.' : '';
+@endphp
+<header class="sticky top-0 z-50 border-b bg-white/95 backdrop-blur-sm border-border">
+    <nav class="flex items-center justify-between h-20 max-w-6xl px-6 mx-auto" x-data="{ mobileOpen: false, userMenu: false }">
+        <a href="{{ route($localePrefix.'home') }}" class="flex items-center gap-3 shrink-0">
+            <img src="{{ asset('images/logo.png') }}" alt="La Gloire Divine" class="rounded-full w-11 h-11">
+            <span class="hidden text-lg font-semibold leading-tight font-display text-primary-dark sm:block">
+                La Gloire Divine
+            </span>
+        </a>
+
+        <div class="items-center hidden lg:flex gap-7">
+            @foreach ($navLinks as $link)
+                <a href="{{ route($localePrefix.$link['route']) }}"
+                   class="text-sm font-medium transition-colors text-ink-soft hover:text-primary">
+                    {{ $link['label'] }}
+                </a>
+            @endforeach
+        </div>
+
+        <div class="items-center hidden gap-4 lg:flex">
+            <a href="{{ route($localePrefix.'rendez-vous.create') }}"
+               class="px-5 py-2.5 rounded-full bg-primary text-white text-sm font-medium hover:bg-primary-light transition-colors">
+                {{ __('Prendre rendez-vous') }}
+            </a>
+
+            <x-language-switcher />
+
+            @auth
+                <div class="relative" @click.outside="userMenu = false">
+                    <button @click="userMenu = !userMenu"
+                            class="flex items-center justify-center text-sm font-semibold text-white transition-colors rounded-full w-9 h-9 bg-primary hover:bg-primary-light">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </button>
+                    <div x-show="userMenu" x-transition style="display: none;"
+                         class="absolute right-0 mt-2 w-52 bg-white border border-border rounded-xl shadow-lg py-1.5">
+                        <div class="px-3.5 py-2 border-b border-border mb-1">
+                            <p class="text-sm font-medium truncate text-ink">{{ auth()->user()->name }}</p>
+                            <p class="text-xs truncate text-ink-soft">{{ auth()->user()->email }}</p>
+                        </div>
+                        <a href="{{ route('profile.edit') }}" class="block px-3.5 py-2 text-sm text-ink hover:bg-tint">
+                            {{ __('Mon profil') }}
+                        </a>
+                        <a href="{{ route($localePrefix.'rendez-vous.index') }}" class="block px-3.5 py-2 text-sm text-ink hover:bg-tint">
+                            {{ __('Mes rendez-vous') }}
+                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="w-full text-left px-3.5 py-2 text-sm text-red-600 hover:bg-red-50">
+                                {{ __('Déconnexion') }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @else
+                <a href="{{ route('login') }}" aria-label="{{ __('Connexion') }}"
+                   class="flex items-center justify-center transition-colors border rounded-full w-9 h-9 border-border text-ink-soft hover:text-primary hover:bg-tint">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                </a>
+            @endauth
+        </div>
+
+        <button class="lg:hidden text-ink" @click="mobileOpen = !mobileOpen" aria-label="Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+
+        <div x-show="mobileOpen" x-transition style="display: none;"
+             class="absolute left-0 right-0 flex flex-col gap-4 px-6 py-5 bg-white border-b shadow-lg lg:hidden top-20 border-border">
+            @foreach ($navLinks as $link)
+                <a href="{{ route($localePrefix.$link['route']) }}" class="text-sm font-medium text-ink-soft hover:text-primary">
+                    {{ $link['label'] }}
+                </a>
+            @endforeach
+            <a href="{{ route($localePrefix.'rendez-vous.create') }}"
+               class="px-5 py-2.5 rounded-full bg-primary text-white text-sm font-medium text-center">
+                {{ __('Prendre rendez-vous') }}
+            </a>
+            @auth
+                <a href="{{ route('profile.edit') }}" class="text-sm font-medium text-ink-soft">{{ __('Mon profil') }}</a>
+                <a href="{{ route($localePrefix.'rendez-vous.index') }}" class="text-sm font-medium text-ink-soft">{{ __('Mes rendez-vous') }}</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="text-sm font-medium text-red-600">{{ __('Déconnexion') }}</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="text-sm font-medium text-ink-soft">{{ __('Connexion') }}</a>
+            @endauth
+            <div class="pt-2 border-t border-border">
+                <x-language-switcher />
+            </div>
+        </div>
+    </nav>
+</header>

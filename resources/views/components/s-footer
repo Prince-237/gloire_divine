@@ -1,0 +1,74 @@
+@php
+    $localePrefix = app()->getLocale() === 'en' ? 'en.' : '';
+@endphp
+<footer class="text-white bg-primary-dark">
+    <div class="grid max-w-6xl gap-10 px-6 mx-auto py-14 md:grid-cols-4">
+        <div>
+            <div class="flex items-center gap-2 mb-3">
+                <img src="{{ asset('images/logo.png') }}" alt="La Gloire Divine" class="w-10 h-10 rounded-full">
+                <span class="text-lg font-semibold font-display">La Gloire Divine</span>
+            </div>
+            <p class="max-w-xs text-sm text-white/70">
+                {{ app()->getLocale() === 'fr'
+                    ? 'Humanisation des soins de qualité pour une médecine de proximité.'
+                    : 'Humanizing quality care for community-focused medicine.' }}
+            </p>
+            <p class="mt-3 text-xs font-medium text-accent-light">{{ __('Ouvert 7j/7, 24h/24') }}</p>
+        </div>
+
+        <div>
+            <h3 class="mb-3 text-base font-semibold font-display">{{ __('Contact') }}</h3>
+            <ul class="space-y-2 text-sm text-white/80">
+                <li>Entrée Lycée, derrière le Collège La Perfection, Douala, Cameroun</li>
+                <li>
+                    <a href="tel:+237640170487" class="transition-colors hover:text-accent-light">
+                        +237 640 170 487 <span class="text-white/50">({{ app()->getLocale() === 'fr' ? 'ligne directe' : 'direct line' }})</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://wa.me/237682600401" target="_blank" rel="noopener" class="transition-colors hover:text-accent-light">
+                        +237 682 600 401 (WhatsApp)
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="mb-3 text-base font-semibold font-display">{{ __('Services') }}</h3>
+            <ul class="space-y-2 text-sm text-white/80">
+                <li><a href="{{ route($localePrefix.'services.index') }}" class="transition-colors hover:text-accent-light">{{ app()->getLocale() === 'fr' ? 'Maternité' : 'Maternity' }}</a></li>
+                <li><a href="{{ route($localePrefix.'services.index') }}" class="transition-colors hover:text-accent-light">{{ app()->getLocale() === 'fr' ? 'Kinésithérapie' : 'Physiotherapy' }}</a></li>
+                <li><a href="{{ route($localePrefix.'services.index') }}" class="transition-colors hover:text-accent-light">{{ app()->getLocale() === 'fr' ? 'Laboratoire' : 'Laboratory' }}</a></li>
+                <li><a href="{{ route($localePrefix.'services.index') }}" class="transition-colors hover:text-accent-light">{{ app()->getLocale() === 'fr' ? 'Médecine générale' : 'General medicine' }}</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="mb-3 text-base font-semibold font-display">
+                {{ app()->getLocale() === 'fr' ? 'Suivez-nous' : 'Follow us' }}
+            </h3>
+            <div class="flex gap-3 mb-6">
+                <a href="https://wa.me/237682600401" target="_blank" rel="noopener" aria-label="WhatsApp"
+                   class="flex items-center justify-center w-10 h-10 transition-colors rounded-full bg-white/10 hover:bg-accent hover:text-primary-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                        <path d="M12.004 2C6.486 2 2 6.486 2 12.004c0 1.998.586 3.86 1.594 5.42L2 22l4.7-1.564A9.96 9.96 0 0012.004 22C17.522 22 22 17.522 22 12.004 22 6.486 17.522 2 12.004 2zm0 18.164a8.14 8.14 0 01-4.15-1.14l-.298-.176-2.789.928.938-2.719-.194-.28a8.15 8.15 0 01-1.256-4.373c0-4.512 3.672-8.184 8.184-8.184a8.13 8.13 0 018.184 8.184c0 4.512-3.672 8.184-8.184 8.184z"/>
+                    </svg>
+                </a>
+                <a href="#" target="_blank" rel="noopener" aria-label="Facebook"
+                   class="flex items-center justify-center w-10 h-10 transition-colors rounded-full bg-white/10 hover:bg-accent hover:text-primary-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor">
+                        <path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.022 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.462h-1.26c-1.243 0-1.63.771-1.63 1.562v1.877h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.918 8.437-9.94z"/>
+                    </svg>
+                </a>
+            </div>
+            <p class="text-xs text-white/60">
+                {{ app()->getLocale() === 'fr' ? 'Paiement : Orange Money, MTN MoMo, espèces.' : 'Payment: Orange Money, MTN MoMo, cash.' }}
+            </p>
+        </div>
+    </div>
+
+    <div class="py-5 text-xs text-center border-t border-white/10 text-white/50">
+        © {{ date('Y') }} La Gloire Divine — {{ __('Tous droits réservés.') }}
+    </div>
+</footer>
