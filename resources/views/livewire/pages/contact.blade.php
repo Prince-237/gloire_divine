@@ -102,6 +102,21 @@ new #[Layout('components.layouts.public')] class extends Component
                         <p class="text-sm text-ink-soft">Orange Money, MTN MoMo, {{ $isFr ? 'espèces' : 'cash' }}</p>
                     </div>
                 </div>
+
+                <div class="rounded-2xl overflow-hidden border border-border mt-2">
+                    <iframe
+                        title="{{ $isFr ? 'Localisation La Gloire Divine' : 'La Gloire Divine location' }}"
+                        class="w-full h-56"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps?q=Coll%C3%A8ge+La+Perfection,+Douala,+Cameroun&output=embed">
+                    </iframe>
+                </div>
+                <p class="text-xs text-ink-soft/80 -mt-2">
+                    {{ $isFr
+                        ? "Le repère affiché est le Collège La Perfection — le centre se trouve juste derrière."
+                        : 'The pin shown is Collège La Perfection — the center is located right behind it.' }}
+                </p>
             </div>
 
             {{-- Formulaire --}}

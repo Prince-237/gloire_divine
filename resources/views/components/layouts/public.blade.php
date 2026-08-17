@@ -30,6 +30,8 @@
 
     <x-site-footer />
 
+    <x-floating-contact-buttons />
+
     @livewireScripts
 </body>
 </html>
