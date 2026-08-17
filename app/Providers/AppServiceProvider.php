@@ -25,5 +25,9 @@ class AppServiceProvider extends ServiceProvider
         // "1071 La clé est trop longue" sur les colonnes uniques/indexées
         // avec l'encodage utf8mb4 par défaut de Laravel.
         Schema::defaultStringLength(191);
+        // 👈 2. Forcer HTTPS en environnement de production
+        if ($this->app->environment('production') || config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }
