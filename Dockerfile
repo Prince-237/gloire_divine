@@ -20,9 +20,9 @@ RUN a2enmod rewrite
 
 # 5. Définir le dossier racine d'Apache sur le dossier public/ de Laravel
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-RUN sed -ri -e 'before/s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 'before/s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/conf-available/*.conf
-
+# ✅ Lignes corrigées :
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/conf-available/*.conf
 # 6. Installer Composer dans le conteneur
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
