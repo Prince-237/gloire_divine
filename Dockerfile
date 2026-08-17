@@ -1,7 +1,7 @@
 # 1. Utiliser l'image officielle PHP 8.2 avec Apache
 FROM php:8.2-apache
 
-# 2. Installer les dépendances système nécessaires à Laravel (zip, pdo, libpq pour PostgreSQL, etc.)
+# 2. Installer les dépendances système, PostgreSQL/MySQL + Node.js (pour Vite)
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
@@ -10,36 +10,40 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
-    curl
+    curl \
+    gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
-# 3. Installer les extensions PHP indispensables pour Laravel et les bases de données (MySQL et PostgreSQL)
+# 3. Installer les extensions PHP
 RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd
 
-# 4. Activer le module mod_rewrite d'Apache (obligatoire pour le routage de Laravel)
+# 4. Activer le module mod_rewrite d'Apache
 RUN a2enmod rewrite
 
-# 5. Définir le dossier racine d'Apache sur le dossier public/ de Laravel
+# 5. Configurer le dossier public d'Apache
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-# ✅ Lignes corrigées :
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/conf-available/*.conf
-# 6. Installer Composer dans le conteneur
+
+# 6. Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 7. Copier le code source de votre projet dans le dossier du serveur
+# 7. Copier le projet
 WORKDIR /var/www/html
 COPY . .
 
-# 8. Installer les dépendances de Laravel avec Composer
+# 8. Installer les dépendances PHP et JavaScript + Compiler Vite
 RUN composer install --no-dev --optimize-autoloader
+RUN npm install
+RUN npm run build
 
-# 9. Configurer les permissions sur les dossiers de stockage et de cache
+# 9. Configurer les permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# 10. Indiquer le port d'écoute d'Apache
+# 10. Exposer le port 80
 EXPOSE 80
 
-# 11. Commande de démarrage d'Apache
-# Efface le cache de configuration et lance les migrations avant de démarrer Apache
+# 11. Vider le cache, lancer les migrations et démarrer Apache
 CMD php artisan config:clear && php artisan migrate --force && apache2-foreground
