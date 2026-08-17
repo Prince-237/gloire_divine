@@ -41,4 +41,5 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 80
 
 # 11. Commande de démarrage d'Apache
-CMD ["apache2-foreground"]
+# Efface le cache de configuration et lance les migrations avant de démarrer Apache
+CMD php artisan config:clear && php artisan migrate --force && apache2-foreground
