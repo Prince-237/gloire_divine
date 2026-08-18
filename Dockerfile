@@ -22,9 +22,12 @@ RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd
 RUN a2enmod rewrite
 
 # 5. Configurer le dossier public d'Apache
+# Définir le dossier public de Laravel comme racine du serveur
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/conf-available/*.conf
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+
 
 # 6. Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -46,4 +49,4 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 80
 
 # 11. Vider le cache, lancer les migrations et démarrer Apache
-CMD php artisan config:clear && php artisan migrate --force && apache2-foreground
+CMD php artisan config:clear && php artisan cache:clear && php artisan route:clear && php artisan view:clear && apache2-foreground
