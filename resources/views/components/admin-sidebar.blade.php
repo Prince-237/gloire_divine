@@ -5,6 +5,7 @@
         ['route' => 'admin.services.index', 'label' => 'Services', 'icon' => 'stethoscope'],
         ['route' => 'admin.rendez-vous.index', 'label' => 'Rendez-vous', 'icon' => 'heart'],
         ['route' => 'admin.messages.index', 'label' => 'Messages', 'icon' => 'flask'],
+        ['route' => 'admin.news.index', 'label' => 'Actualités', 'icon' => 'activity'],
         ['route' => 'admin.loyalty.edit', 'label' => 'Offre fidélité', 'icon' => 'scissors'],
     ];
 @endphp

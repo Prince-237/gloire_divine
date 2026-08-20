@@ -21,7 +21,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="min-h-screen flex flex-col bg-bg text-ink">
+<body class="flex flex-col min-h-screen bg-bg text-ink">
+    <!-- <x-page-loader /> -->
+    
     <x-site-navbar />
 
     <main class="flex-1">

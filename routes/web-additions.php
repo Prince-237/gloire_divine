@@ -30,7 +30,10 @@ Route::get('/faq', fn () => view('pages.faq'))->name('faq');
 
 Volt::route('/contact', 'pages.contact')->name('contact');
 
-Route::get('/actualites', fn () => view('pages.coming-soon', ['title' => 'Actualités']))->name('news.index');
+Route::get('/actualites', fn () => view('pages.news.index', ['articles' => \App\Models\NewsArticle::published()->latestFirst()->paginate(6)]))
+    ->name('news.index');
+Route::get('/actualites/{article:slug}', fn (\App\Models\NewsArticle $article) => view('pages.news.show', ['article' => $article]))
+    ->name('news.show');
 
 Route::middleware('auth')->group(function () {
     Volt::route('/rendez-vous/nouveau', 'pages.rendez-vous.create')->name('rendez-vous.create');
@@ -42,9 +45,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Volt::route('/utilisateurs', 'admin.users.index')->name('users.index');
 
     Volt::route('/services', 'admin.services.index')->name('services.index');
-    Route::get('/rendez-vous', fn () => view('pages.coming-soon', ['title' => 'Gestion des rendez-vous']))->name('rendez-vous.index');
-    Route::get('/messages', fn () => view('pages.coming-soon', ['title' => 'Gestion des messages']))->name('messages.index');
-    Route::get('/offre-fidelite', fn () => view('pages.coming-soon', ['title' => "Offre fidélité"]))->name('loyalty.edit');
+    Volt::route('/rendez-vous', 'admin.rendez-vous.index')->name('rendez-vous.index');
+    Volt::route('/messages', 'admin.messages.index')->name('messages.index');
+    Volt::route('/offre-fidelite', 'admin.loyalty.edit')->name('loyalty.edit');
+
+    Volt::route('/actualites', 'admin.news.index')->name('news.index');
+    Volt::route('/actualites/nouvelle', 'admin.news.create')->name('news.create');
+    Volt::route('/actualites/{article}/modifier', 'admin.news.edit')->name('news.edit');
 });
 
 Route::prefix('en')->name('en.')->group(function () {
@@ -60,7 +67,10 @@ Route::prefix('en')->name('en.')->group(function () {
 
     Volt::route('/contact', 'pages.contact')->name('contact');
 
-    Route::get('/news', fn () => view('pages.coming-soon', ['title' => 'News']))->name('news.index');
+    Route::get('/news', fn () => view('pages.news.index', ['articles' => \App\Models\NewsArticle::published()->latestFirst()->paginate(6)]))
+        ->name('news.index');
+    Route::get('/news/{article:slug}', fn (\App\Models\NewsArticle $article) => view('pages.news.show', ['article' => $article]))
+        ->name('news.show');
 
     Route::middleware('auth')->group(function () {
         Volt::route('/appointments/new', 'pages.rendez-vous.create')->name('rendez-vous.create');
