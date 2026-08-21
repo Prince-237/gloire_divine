@@ -17,7 +17,8 @@
 </head>
 
 <body class="font-sans antialiased">
-
+            <!-- <x-loader /> -->
+<!-- @include('components.loader') -->
 
 
     

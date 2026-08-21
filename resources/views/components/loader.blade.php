@@ -7,11 +7,10 @@
             setTimeout(() => {
                 loading = false;
                 sessionStorage.setItem('{{ $storageKey }}', '1');
-            }, 2500);
+            }, 3000);
         }
     "
     x-show="loading"
-    x-cloak
     x-transition:leave="transition ease-in duration-300"
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0"

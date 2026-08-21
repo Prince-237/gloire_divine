@@ -13,18 +13,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="bg-tint min-h-screen flex items-center justify-center px-6 py-12">
+<body class="flex items-center justify-center min-h-screen px-6 py-12 bg-tint">
     <div class="w-full max-w-md">
         <a href="{{ route('home') }}" class="flex flex-col items-center mb-8">
-            <img src="{{ asset('images/logo.png') }}" alt="La Gloire Divine" class="w-16 h-16 rounded-full mb-3">
-            <span class="font-display text-xl font-semibold text-primary-dark">La Gloire Divine</span>
+            <img src="{{ asset('images/logo.png') }}" alt="La Gloire Divine" class="w-16 h-16 mb-3 rounded-full">
+            <span class="text-xl font-semibold font-display text-primary-dark">La Gloire Divine</span>
         </a>
 
-        <div class="bg-surface rounded-2xl border border-border p-6 sm:p-8 shadow-sm">
+        <div class="p-6 border shadow-sm bg-surface rounded-2xl border-border sm:p-8">
             {{ $slot }}
         </div>
 
-        <p class="text-center text-xs text-ink-soft/70 mt-6">
+        <p class="mt-6 text-xs text-center text-ink-soft/70">
             © {{ date('Y') }} La Gloire Divine
         </p>
     </div>

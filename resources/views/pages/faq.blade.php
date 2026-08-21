@@ -18,25 +18,25 @@
 @endphp
 
 <x-layouts.public title="FAQ">
-    <div class="max-w-3xl mx-auto px-6 py-16 md:py-24">
-        <div class="text-center mb-12">
+    <div class="max-w-3xl px-6 py-16 mx-auto md:py-24">
+        <div class="mb-12 text-center">
             <span class="text-xs font-semibold tracking-widest uppercase text-primary">FAQ</span>
-            <h1 class="font-display text-3xl md:text-4xl font-semibold text-primary-dark mt-2">
+            <h1 class="mt-2 text-3xl font-semibold font-display md:text-4xl text-primary-dark">
                 {{ $isFr ? 'Questions fréquentes' : 'Frequently asked questions' }}
             </h1>
         </div>
 
         <div class="space-y-3">
             @foreach ($faqs as $i => $faq)
-                <div class="bg-surface rounded-2xl border border-border overflow-hidden" x-data="{ open: false }">
-                    <button @click="open = !open" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left">
+                <div class="overflow-hidden border bg-surface rounded-2xl border-border" x-data="{ open: false }">
+                    <button @click="open = !open" class="flex items-center justify-between w-full gap-4 px-5 py-4 text-left">
                         <span class="font-medium text-ink">{{ $faq['q'] }}</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary shrink-0 transition-transform" :class="open && 'rotate-45'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform text-primary shrink-0" :class="open && 'rotate-45'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
                     </button>
                     <div x-show="open" x-transition style="display: none;" class="px-5 pb-4">
-                        <p class="text-sm text-ink-soft leading-relaxed">{{ $faq['a'] }}</p>
+                        <p class="text-sm leading-relaxed text-ink-soft">{{ $faq['a'] }}</p>
                     </div>
                 </div>
             @endforeach

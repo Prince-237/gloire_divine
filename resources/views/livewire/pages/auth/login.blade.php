@@ -68,16 +68,21 @@ new #[Layout('components.layouts.guest')] class extends Component
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());
     }
 }; ?>
 
 <div>
+    <div class="text-left">
+        <a href="index.php" style="text-decoration: none; font-size: 14px;" class="text-gray-400 hover:text-green-900">
+            &larr; Retour à l'accueil
+        </a>
+    </div>
     <div class="mb-6 text-center">
-        <h1 class="font-display text-xl font-semibold text-primary-dark">
+        <h1 class="text-xl font-semibold font-display text-primary-dark">
             {{ app()->getLocale() === 'fr' ? 'Connexion' : 'Log in' }}
         </h1>
-        <p class="text-sm text-ink-soft mt-1">
+        <p class="mt-1 text-sm text-ink-soft">
             {{ app()->getLocale() === 'fr'
                 ? 'Accédez à votre espace patient.'
                 : 'Access your patient space.' }}
@@ -86,12 +91,13 @@ new #[Layout('components.layouts.guest')] class extends Component
 
     {{-- Session Status --}}
     @if (session('status'))
-        <div class="mb-4 text-sm text-primary bg-tint rounded-lg px-3 py-2">
-            {{ session('status') }}
-        </div>
+    <div class="px-3 py-2 mb-4 text-sm rounded-lg text-primary bg-tint">
+        {{ session('status') }}
+    </div>
     @endif
 
     <form wire:submit="login" class="space-y-4">
+
         <div>
             <x-input-label for="email" value="Email" />
             <x-text-input wire:model="email" id="email" type="email" name="email" required autofocus autocomplete="username" />
@@ -111,14 +117,14 @@ new #[Layout('components.layouts.guest')] class extends Component
             </label>
 
             @if (Route::has('password.request'))
-                <a class="text-sm text-primary hover:text-primary-light underline" href="{{ route('password.request') }}" wire:navigate>
-                    {{ app()->getLocale() === 'fr' ? 'Mot de passe oublié ?' : 'Forgot your password?' }}
-                </a>
+            <a class="text-sm underline text-primary hover:text-primary-light" href="{{ route('password.request') }}" wire:navigate>
+                {{ app()->getLocale() === 'fr' ? 'Mot de passe oublié ?' : 'Forgot your password?' }}
+            </a>
             @endif
         </div>
 
         <div class="flex items-center justify-between pt-2">
-            <a class="text-sm text-primary hover:text-primary-light underline" href="{{ route('register') }}" wire:navigate>
+            <a class="text-sm underline text-primary hover:text-primary-light" href="{{ route('register') }}" wire:navigate>
                 {{ app()->getLocale() === 'fr' ? 'Créer un compte' : 'Create an account' }}
             </a>
 

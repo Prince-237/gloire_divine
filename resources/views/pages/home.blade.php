@@ -4,6 +4,7 @@ $localePrefix = $isFr ? '' : 'en.';
 @endphp
 
 <x-layouts.public :title="$isFr ? 'Accueil' : 'Home'">
+    
 
     {{-- Hero --}}
     <section class="relative flex items-center min-h-screen overflow-hidden bg-tint">

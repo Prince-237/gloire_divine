@@ -12,10 +12,13 @@
     @livewireStyles
 </head>
 <body class="bg-tint">
-    <div class="lg:flex min-h-screen">
+    <x-page-loader storage-key="lgd_admin_loaded" />
+    
+
+    <div class="min-h-screen lg:flex">
         <x-admin-sidebar />
 
-        <main class="flex-1 min-w-0 p-5 md:p-8 max-w-6xl mx-auto w-full">
+        <main class="flex-1 w-full max-w-6xl min-w-0 p-5 mx-auto md:p-8">
             {{ $slot }}
         </main>
     </div>

@@ -22,8 +22,8 @@
     @livewireStyles
 </head>
 <body class="flex flex-col min-h-screen bg-bg text-ink">
-    <!-- <x-page-loader /> -->
-    
+    <x-page-loader />
+
     <x-site-navbar />
 
     <main class="flex-1">
